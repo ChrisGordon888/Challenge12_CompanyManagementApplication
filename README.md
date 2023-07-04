@@ -4,11 +4,11 @@
 This is a command line application designed to provide a business owner with a simple, intuitive method for managing departments, roles, and employees in their company. This empowers business owners to effectively organize and plan their businesses with ease.
 
 # Table of Contents:
-- Installation [Installation]
-- Usage [Usage]
-- Contributing [Contributing]
-- Tests [Tests]
-- License [License]
+- Installation [#Installation]
+- Usage [#Usage]
+- Contributing [#Contributing]
+- Tests [#Tests]
+- License [#License]
 
 ## Installation
 To install the necessary dependencies, run the following command:
