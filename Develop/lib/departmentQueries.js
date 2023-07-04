@@ -1,4 +1,4 @@
-class DepartmentQueries {
+class DepartmentsQueries {
   constructor(connection) {
     this.connection = connection;
   }
@@ -14,4 +14,4 @@ class DepartmentQueries {
   }
 }
 
-module.exports = { DepartmentQueries };
+module.exports = { DepartmentsQueries };

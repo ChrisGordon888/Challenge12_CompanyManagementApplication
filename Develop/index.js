@@ -78,7 +78,7 @@ async function mainMenu() {
 
 function viewAllDepartments() {
   department.readAll()
-    .then((rows) => console.table(rows))
+    .then((rows) => console.table(rows[0]))
     .catch((err) => console.log(err))
     .finally(() => mainMenu());
 }
