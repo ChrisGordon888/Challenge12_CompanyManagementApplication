@@ -17,19 +17,24 @@ const departmentsQueries = new DepartmentsQueries(connection);
 const roleQueries = new RoleQueries(connection);
 const employeeQueries = new EmployeeQueries(connection);
 
-
-async function mainMenu() {
+function displayWelcomeMessage() {
   console.log('\x1b[31m\x1b[1m');
-console.log("  (`\\ .-') /`  ('-.                                 _   .-')      ('-.   ");
-console.log("   `.( OO ),'_(  OO)                               ( '.( OO )_  _(  OO)  ");
-console.log(",--./  .--. (,------.,--.       .-----. .-'),-----. ,--.   ,--.|,------. ");
-console.log("|      |  |  |  .---'|  |.-')  '  .--./( OO'  .-.  '|   `.'   | |  .---' ");
-console.log("|  |   |  |, |  |    |  | OO ) |  |('-./   |  | |  ||         | |  |     ");
-console.log("|  |.'.|  |_||  '--. |  |`-' |/_) |OO  )_) |  |\\|  ||  |'.'|  |(|  '--.  ");
-console.log("|         |  |  .--'(|  '---.'||  |`-'|  \\ |  | |  ||  |   |  | |  .--'  ");
-console.log("|   ,'.   |  |  `---.|      |(_'  '--'\\   `'  '-'  '|  |   |  | |  `---. ");
-console.log("'--'   '--'  `------'`------'   `-----'     `-----' `--'   `--' `------' ");
-console.log('\x1b[0m');
+  console.log("  (`\\ .-') /`  ('-.                                 _   .-')      ('-.   ");
+  console.log("   `.( OO ),'_(  OO)                               ( '.( OO )_  _(  OO)  ");
+  console.log(",--./  .--. (,------.,--.       .-----. .-'),-----. ,--.   ,--.|,------. ");
+  console.log("|      |  |  |  .---'|  |.-')  '  .--./( OO'  .-.  '|   `.'   | |  .---' ");
+  console.log("|  |   |  |, |  |    |  | OO ) |  |('-./   |  | |  ||         | |  |     ");
+  console.log("|  |.'.|  |_||  '--. |  |`-' |/_) |OO  )_) |  |\\|  ||  |'.'|  |(|  '--.  ");
+  console.log("|         |  |  .--'(|  '---.'||  |`-'|  \\ |  | |  ||  |   |  | |  .--'  ");
+  console.log("|   ,'.   |  |  `---.|      |(_'  '--'\\   `'  '-'  '|  |   |  | |  `---. ");
+  console.log("'--'   '--'  `------'`------'   `-----'     `-----' `--'   `--' `------' ");
+  console.log('\x1b[0m');
+}
+
+async function mainMenu(showWelcomeMessage = true) {
+  if (showWelcomeMessage) {
+    displayWelcomeMessage();
+  }
   
   const { option } = await inquirer.prompt([
     {
@@ -81,7 +86,7 @@ console.log('\x1b[0m');
       process.exit();
       default:
     console.log(`Invalid option: ${option}`);
-    mainMenu();
+    mainMenu(false);
 }
 }
 
@@ -89,21 +94,21 @@ function viewAllDepartments() {
   department.readAll()
     .then((rows) => console.table(rows[0]))
     .catch((err) => console.log(err))
-    .finally(() => mainMenu());
+    .finally(() => mainMenu(false));
 }
 
 function viewAllroles() {
   role.readAll()
     .then((rows) => console.table(rows[0]))
     .catch((err) => console.log(err))
-    .finally(() => mainMenu());
+    .finally(() => mainMenu(false));
 }
 
 function viewAllEmployees() {
   employee.readAll()
     .then((rows) => console.table(rows[0]))
     .catch((err) => console.log(err))
-    .finally(() => mainMenu());
+    .finally(() => mainMenu(false));
 }
 
 async function addDepartment() {
@@ -122,7 +127,7 @@ async function addDepartment() {
     console.log(err);
   }
 
-  mainMenu();
+  mainMenu(false);
 }
 
 async function addrole() {
@@ -158,7 +163,7 @@ async function addrole() {
       console.log(err);
     }
   
-    mainMenu();
+    mainMenu(false);
   }
   
   async function addEmployee() {
@@ -194,7 +199,7 @@ async function addrole() {
       console.log(err);
     }
   
-    mainMenu();
+    mainMenu(false);
   }
 
   
@@ -237,7 +242,7 @@ async function addrole() {
       console.log(err);
     }
   
-    mainMenu();
+    mainMenu(false);
   }
 
   async function deleteEmployee() {
@@ -260,7 +265,7 @@ async function addrole() {
     await employeeQueries.deleteEmployee(employeeId);
   
     console.log('Employee deleted successfully!');
-    mainMenu();
+    mainMenu(false);
   }
   
 
