@@ -7,7 +7,6 @@ This is a command line application designed to provide a business owner with a s
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [Tests](#tests)
 - [License](#license)
 
 ## Installation
@@ -16,7 +15,7 @@ npm install
 
 ## Usage
 Once you've installed the dependencies, you can start the application by running:
-node app.js
+node index.js
 
 Upon starting the application, you'll be presented with the following options:
 View all departments
@@ -48,10 +47,6 @@ Contributions are what make the open-source community such an amazing place to l
 2) Commit your Changes (git add . and git commit -m 'Added some AmazingFeature')
 3) Push to the Branch (git push origin feature/AmazingFeature)
 4) Open a Pull Request
-
-## Tests
-To run tests, use the following command:
-npm test
 
 ## License
 Distributed under the MIT License. See LICENSE for more information.
