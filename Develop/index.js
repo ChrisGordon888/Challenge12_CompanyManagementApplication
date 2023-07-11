@@ -1,6 +1,5 @@
 const inquirer = require('inquirer');
 
-// import required modules
 const { createConnection } = require('./db/connection');
 const { Department } = require('./db/department');
 const { Role } = require('./db/role');
@@ -9,10 +8,8 @@ const DepartmentsQueries = require('./lib/departmentsQueries');
 const RoleQueries = require('./lib/roleQueries');
 const EmployeeQueries = require('./lib/employeeQueries');
 
-// creates database connection:
 const connection = createConnection();
 
-// classes to interact with the database:
 const department = new Department(connection);
 const role = new Role(connection);
 const employee = new Employee(connection);
@@ -142,7 +139,6 @@ async function addrole() {
       },
     ]);
   
-    // Add the role to the database
     try {
       await roleQueries.addRole(title, salary, departmentId);
       console.log(`role ${title} added successfully!`);
@@ -150,12 +146,10 @@ async function addrole() {
       console.log(err);
     }
   
-    // Return to the main menu
     mainMenu();
   }
   
   async function addEmployee() {
-    // Prompt user for employee information
     const { firstName, lastName, roleId, managerId } = await inquirer.prompt([
       {
         type: 'input',
@@ -179,10 +173,8 @@ async function addrole() {
       },
     ]);
   
-    // Convert manager ID to null if empty string or whitespace
     const validatedManagerId = managerId.trim() || null;
   
-    // Add the employee to the database
     try {
       await employee.create(firstName, lastName, roleId, validatedManagerId);
       console.log(`Employee ${firstName} ${lastName} added successfully!`);
@@ -190,7 +182,6 @@ async function addrole() {
       console.log(err);
     }
   
-    // Return to the main menu
     mainMenu();
   }
 
@@ -202,7 +193,6 @@ async function addrole() {
   
     const roles = await roleQueries.readAll();
   
-    // Prompt user for employee selection
     const { employeeId } = await inquirer.prompt([
       {
         type: 'list',
@@ -215,7 +205,6 @@ async function addrole() {
       },
     ]);
   
-    // Prompt user for new role selection
     const { newRoleId } = await inquirer.prompt([
       {
         type: 'list',
@@ -228,7 +217,6 @@ async function addrole() {
       },
     ]);
   
-    // Update the employee's role in the database
     try {
       await employeeQueries.updaterole(employeeId, newRoleId); // Pass newRoleId instead of roleId
       console.log('Employee role updated successfully!');
@@ -236,7 +224,6 @@ async function addrole() {
       console.log(err);
     }
   
-    // Return to the main menu
     mainMenu();
   }
 

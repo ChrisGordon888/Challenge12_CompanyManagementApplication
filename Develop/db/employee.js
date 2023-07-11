@@ -74,7 +74,7 @@ class Employee {
         return this.connection.promise().query(sql, params);
       }
     
-      // ...
+      
 
     delete(id) {
       const sql = 'DELETE FROM employee WHERE id = ?';
