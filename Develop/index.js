@@ -19,6 +19,18 @@ const employeeQueries = new EmployeeQueries(connection);
 
 
 async function mainMenu() {
+  console.log('\x1b[31m\x1b[1m');
+console.log("  (`\\ .-') /`  ('-.                                 _   .-')      ('-.   ");
+console.log("   `.( OO ),'_(  OO)                               ( '.( OO )_  _(  OO)  ");
+console.log(",--./  .--. (,------.,--.       .-----. .-'),-----. ,--.   ,--.|,------. ");
+console.log("|      |  |  |  .---'|  |.-')  '  .--./( OO'  .-.  '|   `.'   | |  .---' ");
+console.log("|  |   |  |, |  |    |  | OO ) |  |('-./   |  | |  ||         | |  |     ");
+console.log("|  |.'.|  |_||  '--. |  |`-' |/_) |OO  )_) |  |\\|  ||  |'.'|  |(|  '--.  ");
+console.log("|         |  |  .--'(|  '---.'||  |`-'|  \\ |  | |  ||  |   |  | |  .--'  ");
+console.log("|   ,'.   |  |  `---.|      |(_'  '--'\\   `'  '-'  '|  |   |  | |  `---. ");
+console.log("'--'   '--'  `------'`------'   `-----'     `-----' `--'   `--' `------' ");
+console.log('\x1b[0m');
+  
   const { option } = await inquirer.prompt([
     {
       type: 'list',
