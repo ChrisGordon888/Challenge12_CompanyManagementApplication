@@ -21,4 +21,4 @@ class RoleQueries {
   }
 }
 
-module.exports = { RoleQueries };
+module.exports = RoleQueries;

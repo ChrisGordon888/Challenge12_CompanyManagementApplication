@@ -3,15 +3,15 @@ class DepartmentsQueries {
     this.connection = connection;
   }
 
-  getAllDepartments() {
+  readAll() {
     return new Promise((resolve, reject) => {
-      const query = 'SELECT * FROM departments';
+      const query = 'SELECT * FROM department';
       this.connection.query(query, (err, res) => {
         if (err) return reject(err);
-        return resolve(res);
+        return resolve(res); // Make sure res is just an array of department objects
       });
     });
   }
 }
 
-module.exports = { DepartmentsQueries };
+module.exports = DepartmentsQueries;

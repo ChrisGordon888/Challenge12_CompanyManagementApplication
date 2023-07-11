@@ -68,7 +68,7 @@ class Employee {
         return this.connection.promise().query(sql, params);
       }
   
-      updateRole(id, roleId) {
+      updaterole(id, roleId) {
         const sql = 'UPDATE employee SET role_id = ? WHERE id = ?';
         const params = [roleId, id];
         return this.connection.promise().query(sql, params);

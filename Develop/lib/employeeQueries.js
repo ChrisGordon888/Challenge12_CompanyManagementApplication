@@ -20,7 +20,7 @@ class EmployeeQueries {
     return employee.readAll();
   }
   
-  async updateRole(employeeId, roleId) {
+  async updaterole(employeeId, roleId) {
     const sql = 'UPDATE employee SET role_id = ? WHERE id = ?';
     const params = [roleId, employeeId];
     await this.connection.promise().query(sql, params);
@@ -34,4 +34,4 @@ async deleteEmployee(employeeId) {
 }
 }
 
-module.exports = { EmployeeQueries };
+module.exports = EmployeeQueries;

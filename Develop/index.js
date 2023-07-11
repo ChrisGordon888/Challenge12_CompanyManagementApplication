@@ -5,9 +5,9 @@ const { createConnection } = require('./db/connection');
 const { Department } = require('./db/department');
 const { Role } = require('./db/role');
 const { Employee } = require('./db/employee');
-const { DepartmentQueries } = require('./lib/departmentQueries');
-const { RoleQueries } = require('./lib/roleQueries');
-const { EmployeeQueries } = require('./lib/employeeQueries');
+const DepartmentsQueries = require('./lib/departmentsQueries');
+const RoleQueries = require('./lib/roleQueries');
+const EmployeeQueries = require('./lib/employeeQueries');
 
 // creates database connection:
 const connection = createConnection();
@@ -16,7 +16,7 @@ const connection = createConnection();
 const department = new Department(connection);
 const role = new Role(connection);
 const employee = new Employee(connection);
-const departmentQueries = new DepartmentQueries(connection);
+const departmentsQueries = new DepartmentsQueries(connection);
 const roleQueries = new RoleQueries(connection);
 const employeeQueries = new EmployeeQueries(connection);
 
@@ -48,7 +48,7 @@ async function mainMenu() {
       viewAllDepartments();
       break;
     case 'View all roles':
-      viewAllRoles();
+      viewAllroles();
       break;
     case 'View all employees':
       viewAllEmployees();
@@ -57,13 +57,13 @@ async function mainMenu() {
       addDepartment();
       break;
     case 'Add a role':
-      addRole();
+      addrole();
       break;
     case 'Add an employee':
       addEmployee();
       break;
     case 'Update an employee role':
-      updateEmployeeRole();
+      updateEmployeerole();
       break;
     case 'Delete an employee':
       deleteEmployee();
@@ -83,16 +83,16 @@ function viewAllDepartments() {
     .finally(() => mainMenu());
 }
 
-function viewAllRoles() {
+function viewAllroles() {
   role.readAll()
-    .then((rows) => console.table(rows))
+    .then((rows) => console.table(rows[0]))
     .catch((err) => console.log(err))
     .finally(() => mainMenu());
 }
 
 function viewAllEmployees() {
   employee.readAll()
-    .then((rows) => console.table(rows))
+    .then((rows) => console.table(rows[0]))
     .catch((err) => console.log(err))
     .finally(() => mainMenu());
 }
@@ -116,9 +116,9 @@ async function addDepartment() {
   mainMenu();
 }
 
-async function addRole() {
-    const departments = await departmentQueries.readAll();
-  
+async function addrole() {
+    const departments = await departmentsQueries.readAll();
+    console.log(departments);
     // Prompt user for role information
     const { title, salary, departmentId } = await inquirer.prompt([
       {
@@ -144,8 +144,8 @@ async function addRole() {
   
     // Add the role to the database
     try {
-      await roleQueries.create(title, salary, departmentId);
-      console.log(`Role ${title} added successfully!`);
+      await roleQueries.addRole(title, salary, departmentId);
+      console.log(`role ${title} added successfully!`);
     } catch (err) {
       console.log(err);
     }
@@ -196,24 +196,30 @@ async function addRole() {
 
   
 
-  async function updateEmployeeRole() {
+  async function updateEmployeerole() {
     const employees = await employeeQueries.readAll();
+    const flattenedEmployees = employees.flat(); // Flatten the array of arrays
+  
     const roles = await roleQueries.readAll();
   
-    // Prompt user for employee and new role information
-    const { employeeId, roleId } = await inquirer.prompt([
+    // Prompt user for employee selection
+    const { employeeId } = await inquirer.prompt([
       {
         type: 'list',
         name: 'employeeId',
         message: 'Which employee would you like to update?',
-        choices: employees.map((emp) => ({
+        choices: flattenedEmployees.map((emp) => ({
           name: `${emp.first_name} ${emp.last_name}`,
           value: emp.id,
         })),
       },
+    ]);
+  
+    // Prompt user for new role selection
+    const { newRoleId } = await inquirer.prompt([
       {
         type: 'list',
-        name: 'roleId',
+        name: 'newRoleId',
         message: "What is the employee's new role?",
         choices: roles.map((role) => ({
           name: role.title,
@@ -224,7 +230,7 @@ async function addRole() {
   
     // Update the employee's role in the database
     try {
-      await employeeQueries.updateRole(employeeId, roleId);
+      await employeeQueries.updaterole(employeeId, newRoleId); // Pass newRoleId instead of roleId
       console.log('Employee role updated successfully!');
     } catch (err) {
       console.log(err);
