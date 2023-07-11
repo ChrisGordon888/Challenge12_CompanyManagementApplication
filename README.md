@@ -6,7 +6,7 @@ This is a command line application designed to provide a business owner with a s
 # Table of Contents:
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing]
+- [Contributing](#contributing)
 - [Tests](#tests)
 - [License](#license)
 
