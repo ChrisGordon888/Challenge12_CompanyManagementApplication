@@ -188,10 +188,11 @@ async function addrole() {
   
 
   async function updateEmployeerole() {
-    const employees = await employeeQueries.readAll();
-    const flattenedEmployees = employees.flat(); // Flatten the array of arrays
+    const employeesData = await employeeQueries.readAll();
+    const rolesData = await roleQueries.readAll();
   
-    const roles = await roleQueries.readAll();
+    const flattenedEmployees = employeesData[0]; // Assuming readAll returns [[{...}, {...}, ...]]
+    const flattenedRoles = rolesData[0]; // Assuming readAll returns [[{...}, {...}, ...]]
   
     const { employeeId } = await inquirer.prompt([
       {
@@ -210,7 +211,7 @@ async function addrole() {
         type: 'list',
         name: 'newRoleId',
         message: "What is the employee's new role?",
-        choices: roles.map((role) => ({
+        choices: flattenedRoles.map((role) => ({
           name: role.title,
           value: role.id,
         })),
@@ -218,7 +219,7 @@ async function addrole() {
     ]);
   
     try {
-      await employeeQueries.updaterole(employeeId, newRoleId); // Pass newRoleId instead of roleId
+      await employeeQueries.updaterole(employeeId, newRoleId);
       console.log('Employee role updated successfully!');
     } catch (err) {
       console.log(err);
@@ -228,14 +229,16 @@ async function addrole() {
   }
 
   async function deleteEmployee() {
-    const employees = await employeeQueries.getAllEmployees();
+    const employeesData = await employeeQueries.getAllEmployees();
+  
+    const flattenedEmployees = employeesData[0]; // Assuming getAllEmployees returns [[{...}, {...}, ...]]
   
     const { employeeId } = await inquirer.prompt([
       {
         type: 'list',
         name: 'employeeId',
         message: 'Which employee would you like to delete?',
-        choices: employees.map((emp) => ({
+        choices: flattenedEmployees.map((emp) => ({
           name: `${emp.first_name} ${emp.last_name}`,
           value: emp.id,
         })),
